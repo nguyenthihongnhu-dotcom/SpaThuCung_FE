@@ -3,18 +3,20 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './index.css';
 import HomePage from './pages/HomePage';
-import Header from './components/Header';
+import { SidebarProvider } from './context/SidebarContext';
+import DashboardLayout from './components/DashboardLayout';
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Header />
-      <main className="max-w-7xl mx-auto">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-
-        </Routes>
-      </main>
+      <SidebarProvider>
+        <DashboardLayout>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            {/* Thêm các route khác ở đây */}
+          </Routes>
+        </DashboardLayout>
+      </SidebarProvider>
     </BrowserRouter>
   )
 }

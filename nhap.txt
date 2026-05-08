@@ -1,0 +1,24 @@
+layout import React from "react";
+import Sidebar from "./Sidebar";
+import { useSidebar } from "./SidebarContext";
+
+export default function DashboardLayout({ children }) {
+  const { isExpanded } = useSidebar();
+
+  return (
+    <div className="min-h-screen bg-gray-50 dark:bg-black">
+      <Sidebar />
+      
+      {/* Nội dung chính giãn nở theo sidebar */}
+      <main 
+        className={`transition-all duration-300 min-h-screen p-6 ${
+          // Desktop: Thụt lề dựa trên việc sidebar mở hay đóng
+          // Mobile: Không thụt lề (vì sidebar là overlay)
+          isExpanded ? "md:ml-64" : "md:ml-20"
+        }`}
+      >
+        {children}
+      </main>
+    </div>
+  );
+}

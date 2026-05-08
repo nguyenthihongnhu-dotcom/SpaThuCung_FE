@@ -6,7 +6,7 @@ const HomePage = () => {
 
 
     return (
-        <p>HomePage</p>
+        <p>Hiển thị nội dung ở đây</p>
     );
 };
 
