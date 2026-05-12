@@ -15,12 +15,12 @@ const HomePage = () => {
         // Mock Login: Cho phép đăng nhập tạm thời mà không cần Backend
         if (username === 'admin' && password === 'admin') {
             localStorage.setItem('token', 'mock-token-12345');
-            navigate('/OrderPage');
+            navigate('/orderpage');
             return;
         }
         if (username === 'cus' && password === 'cus') {
             localStorage.setItem('token', 'mock-token-12345');
-            navigate('/CusOrderPage');
+            navigate('/cusorderpage');
             return;
         }
 

@@ -6,6 +6,7 @@ import HomePage from './pages/Login/HomePage';
 import { SidebarProvider } from './context/SidebarContext';
 import DashboardLayout from './components/DashboardLayout';
 import OrderPage from './pages/Admin/OrderPage';
+import ServicePage from './pages/Admin/ServicePage';
 import CusOrderPage from './pages/Customer/CusOrderPage';
 
 const App = () => {
@@ -19,10 +20,10 @@ const App = () => {
           {/* Các trang yêu cầu Sidebar sẽ được bọc trong DashboardLayout */}
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<div>Trang Dashboard</div>} />
-            <Route path="/services" element={<div>Trang Quản lý dịch vụ</div>} />
-            <Route path="/OrderPage" element={<OrderPage />} />
-            <Route path="/CusOrderPage" element={<CusOrderPage />} />
-            <Route path="/orders" element={<div>Trang Quản lý đơn hàng</div>} />
+            <Route path="/servicepage" element={<ServicePage />} />
+            <Route path="/orderpage" element={<OrderPage />} />
+            <Route path="/cusorderpage" element={<CusOrderPage />} />
+
           </Route>
         </Routes>
       </SidebarProvider>
