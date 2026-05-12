@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import api from '../api/axios';
+import api from '../../api/axios';
 
 const HomePage = () => {
     const [username, setUsername] = useState('');
@@ -11,10 +11,23 @@ const HomePage = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         setError('');
+
+        // Mock Login: Cho phép đăng nhập tạm thời mà không cần Backend
+        if (username === 'admin' && password === 'admin') {
+            localStorage.setItem('token', 'mock-token-12345');
+            navigate('/OrderPage');
+            return;
+        }
+        if (username === 'cus' && password === 'cus') {
+            localStorage.setItem('token', 'mock-token-12345');
+            navigate('/CusOrderPage');
+            return;
+        }
+
         try {
             // Cập nhật endpoint thực tế của bạn nếu cần
             const response = await api.post('/login', { username, password });
-            
+
             // Giả sử API trả về token tại response.data.token
             const token = response.data?.token;
             if (token) {
@@ -33,32 +46,32 @@ const HomePage = () => {
         <div style={{ maxWidth: '400px', margin: '50px auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
             <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Đăng Nhập</h2>
             {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-            
+
             <form onSubmit={handleLogin}>
                 <div style={{ marginBottom: '15px' }}>
                     <label style={{ display: 'block', marginBottom: '5px' }}>Username:</label>
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        required 
+                        required
                         style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box' }}
                     />
                 </div>
-                
+
                 <div style={{ marginBottom: '20px' }}>
                     <label style={{ display: 'block', marginBottom: '5px' }}>Password:</label>
-                    <input 
-                        type="password" 
+                    <input
+                        type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        required 
+                        required
                         style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box' }}
                     />
                 </div>
-                
-                <button 
-                    type="submit" 
+
+                <button
+                    type="submit"
                     style={{ width: '100%', padding: '10px', backgroundColor: '#007BFF', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px', fontWeight: 'bold' }}
                 >
                     Đăng Nhập

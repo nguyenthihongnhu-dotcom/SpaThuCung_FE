@@ -17,7 +17,7 @@ const Sidebar = () => {
     // Khai báo mảng menu để code gọn hơn và dễ quản lý
     const menuItems = [
         { id: 2, label: "Quản lý dịch vụ", icon: <Settings size={20} />, hasSub: true },
-        { id: 3, label: "Quản lý nhân viên", icon: <Users size={20} />, hasSub: true },
+
         { id: 4, label: "Quản lý đơn hàng", icon: <ClipboardList size={20} />, hasSub: true },
     ];
 
