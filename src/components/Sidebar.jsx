@@ -13,7 +13,10 @@ const Sidebar = () => {
     const { isExpanded, toggleSidebar } = useSidebar();
     const navigate = useNavigate();
 
-    const menuItems = [
+    // Lấy role từ localStorage (nếu có), mặc định tạm có thể để admin hoặc lấy theo role thật
+    const role = localStorage.getItem('role') || 'admin'; 
+
+    const adminMenu = [
         {
             id: 2,
             label: "Quản lý dịch vụ",
@@ -30,6 +33,31 @@ const Sidebar = () => {
         },
     ];
 
+    const customerMenu = [
+        {
+            id: 1,
+            label: "Đặt dịch vụ",
+            icon: <ClipboardList size={20} />,
+            hasSub: true,
+            path: "/cusservice"
+        },
+        {
+            id: 2,
+            label: "Đơn hàng của tôi",
+            icon: <ClipboardList size={20} />,
+            path: "/cusorderpage"
+        },
+
+        {
+            id: 3,
+            label: "Xem trạng thái dịch vụ",
+            icon: <ClipboardList size={20} />,
+            hasSub: true,
+            path: "/cusorderpage"
+        },
+    ];
+
+    const menuItems = role === 'ADMIN' ? adminMenu : customerMenu;
 
     return (
         <aside

@@ -8,6 +8,7 @@ import DashboardLayout from './components/DashboardLayout';
 import OrderPage from './pages/Admin/OrderPage';
 import ServicePage from './pages/Admin/ServicePage';
 import CusOrderPage from './pages/Customer/CusOrderPage';
+import CusService from './pages/Customer/CusService';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route path="/servicepage" element={<ServicePage />} />
             <Route path="/orderpage" element={<OrderPage />} />
             <Route path="/cusorderpage" element={<CusOrderPage />} />
+            <Route path="/cusservice" element={<CusService/>} />
 
           </Route>
         </Routes>
