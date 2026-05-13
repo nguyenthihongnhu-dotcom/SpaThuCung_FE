@@ -68,9 +68,9 @@ const Sidebar = () => {
                                     )}
                                 </div>
 
-                                {isExpanded && item.hasSub && (
+                                {/* {isExpanded && item.hasSub && (
                                     <ChevronDown size={14} className="text-gray-400 group-hover:text-gray-600" />
-                                )}
+                                )} */}
                             </div>
                         </div>
                     ))}

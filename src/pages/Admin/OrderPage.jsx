@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import OrderTable from '../../components/OrderTable'; // Import component bảng
 
 const OrderPage = () => {
@@ -34,6 +34,26 @@ const OrderPage = () => {
         // Thêm các đơn hàng khác nếu cần
     ];
 
+    const [orders, setOrders] = useState(mockOrderData);
+
+    // Hàm cập nhật trạng thái trong state khi thay đổi dropdown
+    const handleStatusChange = (id, newStatus) => {
+        setOrders(orders.map(order => 
+            order.id === id ? { ...order, status: newStatus } : order
+        ));
+    };
+
+    // Hàm xử lý khi nhấn nút Xác nhận
+    const handleConfirm = (id) => {
+        setOrders(orders.map(order => 
+            order.id === id ? { ...order, isLocked: order.status === 'Đã hoàn thành' } : order
+        ));
+
+        const currentOrder = orders.find(o => o.id === id);
+        console.log("Đã lưu trạng thái mới:", currentOrder);
+        alert(`Đã cập nhật đơn hàng ${id} sang trạng thái: ${currentOrder.status}`);
+    };
+
     // Định nghĩa các cột cho bảng đơn hàng
     const orderColumns = [
         { header: 'Mã Đơn Hàng', accessor: 'id' },
@@ -41,20 +61,44 @@ const OrderPage = () => {
         { header: 'Dịch Vụ', accessor: 'serviceName' },
         { header: 'Ngày Đặt', accessor: 'bookingDate' },
         { header: 'Giờ Đặt', accessor: 'bookingTime' },
-        { header: 'Trạng Thái', accessor: 'status' },
+        { 
+            header: 'Trạng Thái', 
+            accessor: (row) => (
+                <select 
+                    value={row.status}
+                    onChange={(e) => handleStatusChange(row.id, e.target.value)}
+                    disabled={row.isLocked}
+                    className={`border border-gray-300 rounded px-2 py-1 text-sm outline-none focus:border-blue-500 bg-white cursor-pointer ${row.isLocked ? 'opacity-60 cursor-not-allowed bg-gray-100' : ''}`}
+                >
+                    <option value="Chờ xác nhận">Chờ xác nhận</option>
+                    <option value="Đang xử lý">Đang xử lý</option>
+                    <option value="Đã hoàn thành">Đã hoàn thành</option>
+                </select>
+            )
+        },
         { header: 'Tổng Tiền', accessor: 'totalPrice' },
-        // Có thể thêm cột Hành động (xem chi tiết, chỉnh sửa, xóa) tại đây
+        {
+            header: 'Thao tác',
+            accessor: (row) => (
+                <button
+                    onClick={() => handleConfirm(row.id)}
+                    disabled={row.isLocked}
+                    className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all shadow-sm ${row.isLocked ? 'bg-gray-400 cursor-not-allowed text-white' : 'bg-blue-600 hover:bg-blue-700 text-white'}`}
+                >
+                    Xác nhận
+                </button>
+            )
+        }
     ];
 
     return (
         <div className="p-6 bg-white rounded-lg shadow-md -mt-10 relative">
             <h1 className="text-2xl font-bold text-blue-600 mb-4">Trang Quản Lý Đơn Hàng (ADMIN)</h1>
-            {/* <div className="p-4 bg-blue-50 border-l-4 border-blue-500 text-blue-700">
-                <p className="font-medium">Xác nhận:</p>
-                <p>Bạn đã đăng nhập thành công với quyền **Admin**. Đây là nơi quản lý tất cả đơn hàng của hệ thống.</p>
-            </div> */}
-            <div className="mt-8">
-                <OrderTable data={mockOrderData} columns={orderColumns} />
+            <div className="p-4 bg-blue-50 border-l-4 border-blue-500 text-blue-700 mb-6">
+                <p className="text-sm font-medium">Lưu ý: Bạn cần nhấn "Xác nhận" sau khi thay đổi trạng thái để cập nhật vào hệ thống.</p>
+            </div>
+            <div className="mt-4">
+                <OrderTable data={orders} columns={orderColumns} />
             </div>
         </div>
     );

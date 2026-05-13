@@ -10,7 +10,7 @@ const OrderTable = ({ data, columns }) => {
     }
 
     return (
-        <div className="overflow-x-auto bg-white rounded-lg shadow-md">
+        <div className="overflow-x-auto border border-gray-100 rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                     <tr>
@@ -31,9 +31,9 @@ const OrderTable = ({ data, columns }) => {
                             {columns.map((column, colIndex) => (
                                 <td
                                     key={colIndex}
-                                    className="px-6 py-4 whitespace-nowrap"
+                                    className="px-4 py-3 text-sm"
                                 >
-                                    <div className="text-sm text-gray-900">
+                                    <div className="text-gray-900">
                                         {typeof column.accessor === 'function'
                                             ? column.accessor(row)
                                             : row[column.accessor]}

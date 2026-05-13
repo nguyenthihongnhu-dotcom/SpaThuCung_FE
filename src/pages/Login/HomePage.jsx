@@ -12,17 +12,17 @@ const HomePage = () => {
         e.preventDefault();
         setError('');
 
-        // Mock Login: Cho phép đăng nhập tạm thời mà không cần Backend
-        if (username === 'admin' && password === 'admin') {
-            localStorage.setItem('token', 'mock-token-12345');
-            navigate('/orderpage');
-            return;
-        }
-        if (username === 'cus' && password === 'cus') {
-            localStorage.setItem('token', 'mock-token-12345');
-            navigate('/cusorderpage');
-            return;
-        }
+        // // Mock Login: Cho phép đăng nhập tạm thời mà không cần Backend
+        // if (username === 'admin' && password === 'admin') {
+        //     localStorage.setItem('token', 'mock-token-12345');
+        //     navigate('/orderpage');
+        //     return;
+        // }
+        // if (username === 'cus' && password === 'cus') {
+        //     localStorage.setItem('token', 'mock-token-12345');
+        //     navigate('/cusorderpage');
+        //     return;
+        // }
 
         try {
             // Cập nhật endpoint thực tế của bạn nếu cần
