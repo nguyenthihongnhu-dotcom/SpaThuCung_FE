@@ -25,38 +25,20 @@ const HomePage = () => {
         // }
 
         try {
-            // Cập nhật endpoint thực tế của bạn nếu cần
             const response = await api.post('/dang-nhap', { username, password });
 
-            // Giả sử API trả về token tại response.data.result.token
-            const token = response.data?.result?.token;
-            if (token) {
-                localStorage.setItem('token', token); // Lưu token vào localStorage
-                
-                try {
-                    // Giải mã payload từ JWT token
-                    const base64Url = token.split('.')[1];
-                    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                    }).join(''));
-                    
-                    const payload = JSON.parse(jsonPayload);
-                    
-                    // Phân quyền điều hướng
-                    if (payload.role === 'ADMIN') {
-                        navigate('/servicepage');
-                    } else if (payload.role === 'KHACHHANG') {
-                        navigate('/cusorderpage');
-                    } else {
-                        navigate('/dashboard'); // Mặc định nếu không khớp
-                    }
-                } catch (e) {
-                    console.error('Lỗi giải mã token:', e);
-                    navigate('/dashboard'); // Điều hướng mặc định nếu lỗi giải mã
+            const role = response.data?.result?.role;
+            
+            if (role) {
+                if (role === 'ADMIN') {
+                    navigate('/servicepage');
+                } else if (role === 'KHACHHANG') {
+                    navigate('/cusorderpage');
+                } else {
+                    navigate('/'); 
                 }
             } else {
-                setError('Không nhận được token từ server.');
+                setError('Không lấy được thông tin phân quyền từ server.');
             }
         } catch (err) {
             console.error('Lỗi đăng nhập:', err);
